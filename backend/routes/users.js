@@ -7,35 +7,15 @@ const router = express.Router();
 
 router.get('/me', authenticate,   async (req, res) => {
      try {
-        const { id } = req.params; // Use req.params to get the ID from the route parameters
+        const { id } = req.userId
 
-        const user = await User.findByPk(id, {
-            include: [
-                {
-                    model: Appointment,
-                    as: 'appointments',
-                    attributes: ['id', 'date', 'time', 'status', 'createdAt', 'updatedAt', 'teacherId', 'studentId'],
-                    include: [
-                        {
-                            model: User,
-                            as: 'teacher',
-                            attributes: ['id', 'name', 'email']
-                        },
-                        {
-                            model: User,
-                            as: 'student',
-                            attributes: ['id', 'name', 'email']
-                        }
-                    ]
-                },
-            ]
-        });
+        const user = await User.findByPk(id);
 
         if (!user) {
             return res.status(404).json({ msg: "User not found" });
         }
 
-        res.json({ data: { user, msg: "Profile Retrieved Successfully" } });
+        res.json({  user, msg: "Profile Retrieved Successfully"  });
     } catch (error) {
         console.error(error);
         res.status(500).json({ msg: "Error retrieving profile" });
@@ -49,6 +29,13 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   const user = await User.findByPk(req.params.id);
+  res.json(user);
+});
+
+router.get('/teachers', async (req, res) => {
+  const user = await User.findAll({
+    where:{role:"Teacher"}
+  });
   res.json(user);
 });
 

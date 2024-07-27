@@ -1,3 +1,4 @@
+import './App.css'
 import { ToastContainer } from 'react-toastify'
 import Router from './routes'
 import { BrowserRouter } from 'react-router-dom'

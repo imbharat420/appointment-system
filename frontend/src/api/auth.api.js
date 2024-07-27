@@ -8,10 +8,16 @@ const apiAuth = {
 
     login: (value) => axios.post(API_URL + 'login', value),
     getProfile: () => AxiosInterceptor().get(API_BASE + '/users/me'),
+    getTeachers: (value) =>
+        AxiosInterceptor().get(API_BASE + '/users/teachers'),
     getUserById: (value) =>
         AxiosInterceptor().post(API_BASE + '/users/getUserById', value),
+
     follow: (value) =>
-        AxiosInterceptor().post(API_BASE + `/users/${value.userId}/follow`, value),
+        AxiosInterceptor().post(
+            API_BASE + `/users/${value.userId}/follow`,
+            value
+        ),
 }
 
 export default apiAuth

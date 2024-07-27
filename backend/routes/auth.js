@@ -14,7 +14,7 @@ router.post('/register', async (req, res) => {
     const user = await User.create({ name, email, phone, role, password: hashedPassword });
     res.status(201).json(user);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ msg: error.message });
   }
 });
 
@@ -23,7 +23,7 @@ router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ where: { email } });
     if (!user || !await bcrypt.compare(password, user.password)) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      return res.status(401).json({ msg: 'Invalid credentials' });
     }
     const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.json({user, token });
@@ -33,7 +33,7 @@ router.post('/login', async (req, res) => {
 });
 
 router.post('/logout', (req, res) => {
-  res.status(200).json({ message: 'Logged out' });
+  res.status(200).json({ msg: 'Logged out' });
 });
 
 module.exports = router;

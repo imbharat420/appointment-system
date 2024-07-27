@@ -4,7 +4,7 @@ import errorHandler from '../../utils/errorHandler'
 
 export const getUser = createAsyncThunk('/auth/getUser', async () => {
     const { data } = await apiAuth.getProfile()
-    return data.data.user
+    return data.user
 })
 
 export const getUserById = createAsyncThunk(

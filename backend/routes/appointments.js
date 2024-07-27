@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
   const appointments = await Appointment.findAll({ include: ['teacher', 'student'] });
-  res.json(appointments);
+  res.json({appointments});
 });
 
 router.put('/:id', async (req, res) => {

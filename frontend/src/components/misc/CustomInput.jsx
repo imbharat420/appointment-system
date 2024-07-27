@@ -53,25 +53,10 @@ export function CustomSelectInput({ name, label, options }) {
     const [field] = useField(name)
     const { setFieldValue } = useFormikContext()
 
-    const handleSelectChange = (e) => {
-        const selectedValue = e.target.value
-        setFieldValue(name, selectedValue)
-
-        // Additional logic based on the selected value
-        if (selectedValue === 'public') {
-            setFieldValue('price', '') // Clear the price when "public" is selected
-        }
-    }
-
     return (
         <div className="form-group">
             <label>{label}</label>
-            <Field
-                as="select"
-                className={'form-control'}
-                {...field}
-                onChange={handleSelectChange}
-            >
+            <Field as="select" className={'form-control'} {...field}>
                 <option selected={true} disabled={true} value="">
                     Please Select
                 </option>

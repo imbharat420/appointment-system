@@ -6,6 +6,8 @@ import Profile from '../pages/profile/Profile'
 
 import PrivateLayout from '../components/layout/PrivateLayout'
 import Feed from '../pages/posts/Feed'
+import AppointmentList from '../pages/appointment/AppointmentList'
+import AppointmentForm from '../pages/appointment/AppointmentForm'
 
 const AuthPrivateRoute = () => {
     const { user } = useSelector((state) => state.auth)
@@ -23,7 +25,11 @@ const AuthPrivateRoute = () => {
                 },
                 {
                     path: '/feed',
-                    element: <Feed />,
+                    element: <AppointmentList />,
+                },
+                {
+                    path: '/create-appointment',
+                    element: <AppointmentForm />,
                 },
             ],
         },
