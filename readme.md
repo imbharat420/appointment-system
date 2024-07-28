@@ -30,7 +30,7 @@ This project is a full-stack appointment booking system using Node.js, Express, 
 2. Start the backend server.
 
    ```bash
-   npm start
+   npm run start
    ```
 
 ### Frontend Setup
@@ -39,7 +39,7 @@ This project is a full-stack appointment booking system using Node.js, Express, 
 
    ```bash
    cd frontend
-   npm run start
+   npm i
    ```
 
  
