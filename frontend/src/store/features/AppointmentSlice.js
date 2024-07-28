@@ -3,8 +3,8 @@ import apiAppointment from '../../api/appointment.api'
 
 export const getAppointments = createAsyncThunk(
     '/appointment/getAppointments',
-    async () => {
-        const { data } = await apiAppointment.getAll()
+    async (params) => {
+        const { data } = await apiAppointment.getAll(params)
         return data
     }
 )

@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import Profile from '../pages/profile/Profile'
 
 import PrivateLayout from '../components/layout/PrivateLayout'
-import Feed from '../pages/posts/Feed'
+
 import AppointmentList from '../pages/appointment/AppointmentList'
 import AppointmentForm from '../pages/appointment/AppointmentForm'
 
@@ -15,10 +15,6 @@ const AuthPrivateRoute = () => {
         {
             element: <PrivateLayout />,
             children: [
-                {
-                    path: '/profile/:userId',
-                    element: <Profile />,
-                },
                 {
                     path: '/profile',
                     element: <Profile />,

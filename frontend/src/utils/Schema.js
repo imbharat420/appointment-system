@@ -11,6 +11,10 @@ export const RegisterSchema = Yup.object().shape({
     password: Yup.string().required('Password is required'),
 })
 
-export const CreatePostSchema = Yup.object().shape({
-    content: Yup.string().required('Post is required'),
+export const bookAppointmentSchema = Yup.object().shape({
+    teacherId: Yup.string().required('Please Select a Teacher'),
+    date: Yup.string().required('Date is required'),
+    time: Yup.string().required('Time is required'),
+    // studentId: Yup.string().required('Student is required'),
+    topic: Yup.string().required('Topic is required'),
 })

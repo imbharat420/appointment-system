@@ -138,6 +138,11 @@ h1 {
   border-color: #3700b3;
 }
 
+
+.bg-none{
+  background-color: #fff !important;
+}
+
 /* .card-body {
   display: flex;
   justify-content: space-between;

@@ -7,8 +7,8 @@ const router = express.Router();
 
 router.get('/me', authenticate,   async (req, res) => {
      try {
-        const { id } = req.userId
-
+        const { id } = req.user
+          console.log("userId", req.user)
         const user = await User.findByPk(id);
 
         if (!user) {
@@ -32,22 +32,31 @@ router.get('/:id', async (req, res) => {
   res.json(user);
 });
 
-router.get('/teachers', async (req, res) => {
-  const user = await User.findAll({
-    where:{role:"Teacher"}
-  });
-  res.json(user);
+router.get('/type/teachers', async (req, res) => {
+  try {
+    const users = await User.findAll({
+      where: { role: "Teacher" }
+    }); 
+    if (users && users.length > 0) {
+      res.json(users);
+    } else {
+      res.json([]);
+    }
+  } catch (error) {
+    console.error("Error fetching teachers: ", error);
+    res.status(500).json({ msg: "Internal server error" });
+  }
 });
 
 router.put('/:id', async (req, res) => {
   const { name, email, phone, role } = req.body;
-  const userId = req.params.id;
+  const userId = req.params.id; 
 
   try {
      
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser && existingUser.id !== parseInt(userId)) {
-      return res.status(400).json({ message: 'Email already exists' });
+      return res.status(400).json({ msg: 'Email already exists' });
     }
 
     
@@ -55,13 +64,13 @@ router.put('/:id', async (req, res) => {
     res.json({ message: 'User updated' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ msg: 'Internal server error' });
   }
 });
 
 router.delete('/:id', async (req, res) => {
   await User.destroy({ where: { id: req.params.id } });
-  res.json({ message: 'User deleted' });
+  res.json({ msg: 'User deleted' });
 });
 
 module.exports = router;

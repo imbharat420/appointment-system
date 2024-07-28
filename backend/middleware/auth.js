@@ -12,7 +12,7 @@ const authenticate = (req, res, next) => {
     if (err) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
-    req.userId = decoded;
+    req.user = decoded;
     next();
   });
 };

@@ -1,7 +1,8 @@
 // Sidebar.js
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
+import { Link } from 'react-router-dom'
+import { logout } from '../store/features/AuthSlice'
 const Sidebar = () => {
     const dispatch = useDispatch()
     const user = useSelector((state) => state.auth.user)
@@ -13,25 +14,28 @@ const Sidebar = () => {
             className="d-flex flex-column vh-100 p-3 bg-light sticky-top"
             style={{ width: '250px' }}
         >
-            <a
-                href="#"
+            <Link
+                to="/"
                 className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none"
             >
-                <span className="fs-4">Event Management</span>
-            </a>
+                <h1 className="fs-4 fw-2">Event Management</h1>
+            </Link>
             <hr />
             <ul className="nav nav-pills flex-column mb-auto">
                 <li className="nav-item">
-                    <a href="#" className="nav-link sidebar-btn active">
-                        Bookings
-                    </a>
+                    <Link to="/feed" className="nav-link sidebar-btn active">
+                        Appointment
+                    </Link>
                 </li>
             </ul>
             <ul className="nav nav-pills flex-column mt-auto">
                 <li className="my-auto">
-                    <button className="btn btn-outline-primary btn-block w-100">
+                    <Link
+                        to="/profile"
+                        className="btn btn-outline-primary btn-block w-100"
+                    >
                         Edit Account
-                    </button>
+                    </Link>
                 </li>
                 <li className="my-auto mt-2">
                     <button

@@ -60,6 +60,7 @@ function Login() {
                                     </div>
                                     <div className="my-3">
                                         <CustomInputField
+                                            type="email"
                                             name="email"
                                             label="Email"
                                             placeholder={'Enter your email'}
@@ -94,10 +95,6 @@ function Login() {
                                                     label: 'Student',
                                                     value: 'Student',
                                                 },
-                                                {
-                                                    label: 'Institute',
-                                                    value: 'Institute',
-                                                },
                                             ]}
                                         />
                                     </div>
@@ -117,7 +114,7 @@ function Login() {
                                     to="/login"
                                     className="text-primary link-info"
                                 >
-                                    Already have Accouny
+                                    Already have Account
                                 </Link>
                             </div>
                         </div>

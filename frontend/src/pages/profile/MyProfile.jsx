@@ -1,82 +1,67 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate, useParams } from 'react-router-dom'
-import { getUserById } from '../../store/features/AuthSlice'
+import { FormikProvider, Form, useFormik } from 'formik'
+import { CustomInputField } from '../../components/misc/CustomInput'
 import apiAuth from '../../api/auth.api'
-import { toast } from 'react-toastify'
+import { getUser } from '../../store/features/AuthSlice'
+import { useDispatch } from 'react-redux'
 import errorHandler from '../../utils/errorHandler'
+import { toast } from 'react-toastify'
 function MyProfile({ user }) {
-    const handleFollow = async () => {
-        try {
-            await apiAuth.follow({ userId: user?.id })
-            toast.success('You Followed ' + user?.username)
-        } catch (err) {
-            errorHandler(err)
-        }
-    }
+    const dispatch = useDispatch()
+    const formik = useFormik({
+        enableReinitialize: true,
+        initialValues: {
+            id: user?.id || '',
+            name: user?.name || '',
+            email: user?.email || '',
+            phone: user?.phone || '',
+            role: user?.role || '',
+        },
+        onSubmit: async (values, { setSubmitting }) => {
+            try {
+                const response = await apiAuth.edit(values)
+                dispatch(getUser())
+                toast.success(`Profile updated successfully`)
+            } catch (error) {
+                errorHandler(error)
+            }
+            setSubmitting(false)
+        },
+    })
 
     return (
-        <div>
-            <h1 className="text-center">{user?.myprofile && 'My '}Profile</h1>
-            <div className="container">
-                <div className="card profile-card">
-                    <div className="card-body">
-                        <h5 className="card-title">
-                            {' '}
-                            {user?.myprofile && 'Welcome Back, '}
-                            {user?.username}
-                        </h5>
-                        <h6 className="card-subtitle mb-2 text-muted">
-                            {user?.email}
-                        </h6>
-                        {user?.myprofile ? null : (
+        <div className="d-flex justify-content-center align-items-center w-100">
+            <div className="card p-3 appointment-form">
+                <h5 className="card-title text-center">
+                    Welcome Back {user?.name}
+                </h5>
+                <FormikProvider value={formik}>
+                    <Form onSubmit={formik.handleSubmit}>
+                        <h1 className="text-center"></h1>
+
+                        <div className="card-body">
+                            <CustomInputField name="name" label="Name" />
+                            <CustomInputField
+                                type="email"
+                                name="email"
+                                label="email"
+                            />
+                            <CustomInputField
+                                name="phone"
+                                label="Phone"
+                                type="number"
+                            />
+                        </div>
+                        <div className="card-footer bg-none">
                             <button
-                                className="btn btn-primary"
-                                onClick={handleFollow}
+                                type="submit"
+                                className="btn btn-primary btn-block w-100 mx-auto"
                             >
-                                Follow
+                                Submit
                             </button>
-                        )}
-                        <p className="card-text">Followers:</p>
-                        {user?.followers?.length ? (
-                            <ul className="followers-list">
-                                {user?.followers.map((follower) => (
-                                    <li>
-                                        <strong>{follower?.username}</strong>
-                                        <br />
-                                        <small>{follower?.email}</small>
-                                    </li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <p className="text-danger ms-2">😀 No followers </p>
-                        )}
-                        <p className="card-text mt-3">Following:</p>
-                        {user?.followings?.length ? (
-                            <ul className="followers-list">
-                                {user?.followings.map((following) => (
-                                    <li>
-                                        <strong>{following?.username}</strong>
-                                        <br />
-                                        <small>{following?.email}</small>
-                                    </li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <p className="text-danger ms-2">
-                                😀 No followings{' '}
-                            </p>
-                        )}
-                    </div>
-                    <div className="card-footer">
-                        <Link
-                            to={'/feed'}
-                            className="btn btn-primary btn-block mt-2"
-                        >
-                            Check Feed
-                        </Link>
-                    </div>
-                </div>
+                        </div>
+                    </Form>
+                </FormikProvider>
             </div>
         </div>
     )

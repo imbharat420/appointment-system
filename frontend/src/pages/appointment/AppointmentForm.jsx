@@ -7,11 +7,16 @@ import {
     CustomInputField,
     CustomSelectInput,
 } from '../../components/misc/CustomInput'
+import apiAppointment from '../../api/appointment.api'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { bookAppointmentSchema } from '../../utils/Schema'
 // import './AppointmentForm.css'
 
 function AppointmentForm() {
+    const { user } = useSelector((state) => state.auth)
     const [teachers, setTeachers] = useState([])
-
+    const navigate = useNavigate()
     useEffect(() => {
         const fetchTeachers = async () => {
             try {
@@ -25,15 +30,19 @@ function AppointmentForm() {
     }, [])
 
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues: {
             teacherId: '',
             date: '',
             time: '',
+            studentId: user?.id,
+            topic: '',
         },
+        validationSchema: bookAppointmentSchema,
         onSubmit: async (values, { setSubmitting }) => {
             try {
-                const response = await axios.post('/api/appointments', values)
-                console.log('Appointment booked:', response.data)
+                await apiAppointment.create(values)
+                navigate('/feed')
             } catch (error) {
                 console.error('Error booking appointment:', error)
             }
@@ -48,6 +57,10 @@ function AppointmentForm() {
                 <FormikProvider value={formik}>
                     <Form onSubmit={formik.handleSubmit}>
                         <div className="form-group">
+                            <label htmlFor="topic">Topic</label>
+                            <CustomInputField name="topic" id="topic" />
+                        </div>
+                        <div className="form-group">
                             <CustomSelectInput
                                 name="teacherId"
                                 label="Teacher"
@@ -57,8 +70,6 @@ function AppointmentForm() {
                                         label: teacher.name,
                                     })) ?? []
                                 }
-                                onChange={formik.handleChange}
-                                value={formik.values.teacherId}
                             />
                         </div>
                         <div className="form-group">

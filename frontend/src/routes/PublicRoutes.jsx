@@ -2,7 +2,6 @@ import { Navigate, useRoutes } from 'react-router-dom'
 import AuthLayout from '../components/layout/AuthLayout'
 import Login from '../pages/auth/Login'
 import Register from '../pages/auth/Register'
-import Profile from '../pages/profile/Profile'
 
 const AuthPublicRoute = () => {
     const PublicRoutes = [

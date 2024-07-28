@@ -1,10 +1,24 @@
 import React, { useState } from 'react'
-
-function Dropdown({ appointment }) {
+import apiAppointment from '../api/appointment.api'
+import errorHandler from '../utils/errorHandler'
+import { toast } from 'react-toastify'
+import { useDispatch } from 'react-redux'
+import { getAppointments } from '../store/features/AppointmentSlice'
+function Dropdown({ appointment, state }) {
     const [open, setOpen] = useState(false)
-    const handleAction = (id, action) => {
-        // Handle accept or reject action here
-        console.log(`Appointment ID: ${id}, Action: ${action}`)
+
+    const dispatch = useDispatch()
+
+    const handleAction = async (id, action) => {
+        console.log(id)
+        try {
+            await apiAppointment.edit({ appointmentId: id, status: action })
+            setOpen(!open)
+            dispatch(getAppointments(state))
+            toast.success(`Appointment successfully ` + action)
+        } catch (err) {
+            errorHandler(err)
+        }
     }
     return (
         <div className="dropdown">
@@ -33,12 +47,6 @@ function Dropdown({ appointment }) {
                     onClick={() => handleAction(appointment?.id, 'Reject')}
                 >
                     Reject
-                </button>
-                <button
-                    className="dropdown-item"
-                    onClick={() => handleAction(appointment?.id, 'Reschedule')}
-                >
-                    Reschedule
                 </button>
             </div>
         </div>
