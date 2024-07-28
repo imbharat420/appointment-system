@@ -1,29 +1,59 @@
-Selection Process
+# Appointment System
 
-1. Complete provided assignment (Share code zip, video of development)
-2. Tech Round (After clearing round one)
-3. Hr Round
+This project is a full-stack appointment booking system using Node.js, Express, MySQL for the backend, and React for the frontend.
 
-Note : Do not call, only selected candidates would receive interview calls after code review.
+## Getting Started
 
-*Assignment 
+### Database Setup
 
-Basic Appointment System* 
+1. Create a MySQL database named `appointment_system`.
 
-The objective of this assignment is to build a web application that allows users to create, read, update, and delete user account information. 
-Teacher should only be able to confirm an appointment and Student can book apointment from drop down list.
+   ```sql
+   CREATE DATABASE appointment_system;
+   ```
 
-Tech Requirement
-The application should be built using the MySQL(Preferred, else mongodb can be used), Express, React, Node.js. 
+2. Copy `backend/.env.example` to `backend/.env` and set your database configurations.
 
-Assignment Deliverables
-Auth implementation(Register, Login, Logout)
-Registration form fields : Name, Email id, Phone Number, Role(Teacher, Student)
-CRUD Operations(Create, Read, Update, Delete) on users form
-Create user with role like Student, Teacher
-Create appointment module : Only student can book appointment (select teacher from drop down, select date and time), techer should receive notification and should be able to confirm
+   ```bash
+   cp backend/.env.example backend/.env
+   ```
 
-Deliverable
-Clean code in zip format (remove node modules)
-Video of your implementation with all above features
+### Backend Setup
+
+1. Navigate to the backend directory and install dependencies.
+
+   ```bash
+   cd backend
+   npm install
+   ```
+
+2. Start the backend server.
+
+   ```bash
+   npm start
+   ```
+
+### Frontend Setup
+
+1. Navigate to the frontend directory and install dependencies.
+
+   ```bash
+   cd frontend
+   npm run start
+   ```
+
  
+2. Start the frontend server.
+
+   ```bash
+   npm run dev
+   ```
+
+## Project Structure
+
+- **backend**: Contains backend code and configurations.
+- **frontend**: Contains frontend code and configurations.
+
+Feel free to reach out if you face any issues.
+
+---

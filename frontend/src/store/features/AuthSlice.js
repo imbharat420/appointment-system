@@ -7,19 +7,6 @@ export const getUser = createAsyncThunk('/auth/getUser', async () => {
     return data.user
 })
 
-export const getUserById = createAsyncThunk(
-    '/auth/getUserById',
-    async ({ id }) => {
-        try {
-            const { data } = await apiAuth.getUserById({ id })
-            return data.data.user
-        } catch (err) {
-            console.log(err)
-            errorHandler(err)
-        }
-    }
-)
-
 const token = localStorage.getItem('token')
 
 const initialState = {
@@ -28,24 +15,13 @@ const initialState = {
         id: '',
         username: '',
         email: '',
-        followers: [],
-        followings: [],
-    },
-    userById: {
-        id: '',
-        username: '',
-        email: '',
-        followers: [],
-        followings: [],
+        phone: '',
+        role: '',
     },
 }
 
 const updateUser = (state, { payload }) => {
     state.user = { ...payload, myprofile: true }
-}
-
-const updateUserById = (state, { payload }) => {
-    state.userById = { ...payload, myprofile: false }
 }
 
 const authSlice = createSlice({
@@ -62,9 +38,7 @@ const authSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder
-            .addCase(getUser.fulfilled, updateUser)
-            .addCase(getUserById.fulfilled, updateUserById)
+        builder.addCase(getUser.fulfilled, updateUser)
     },
 })
 

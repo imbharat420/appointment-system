@@ -1,9 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authReducer from './features/AuthSlice'
-import postReducer from './features/PostSlice'
 import appointmentReducer from './features/AppointmentSlice'
-// import profileReducer from './features/ProfileSlice'
-// import cmsSlice from './features/cmsSlice'
 
 const persistMiddleware = (store) => (next) => (action) => {
     const result = next(action)
@@ -15,7 +12,6 @@ const persistMiddleware = (store) => (next) => (action) => {
 const store = configureStore({
     reducer: {
         auth: authReducer,
-        post: postReducer,
         appointments: appointmentReducer,
     },
     middleware: (getDefaultMiddleware) =>
